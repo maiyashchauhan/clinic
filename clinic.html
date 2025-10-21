@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Clinic | HealthCare Center</title>
+  <meta name="description" content="Clinic page with services, doctors, booking form, location and contact details." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b1220;
+      --card: #111a2e;
+      --muted: #a0acc4;
+      --text: #e6ecff;
+      --primary: #3b82f6;
+      --primary-600: #2563eb;
+      --accent: #22c55e;
+      --danger: #ef4444;
+      --ring: rgba(59,130,246,0.35);
+      --border: #23304f;
+      --shadow: 0 10px 25px rgba(0,0,0,.35), 0 2px 8px rgba(0,0,0,.25);
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 80% -10%, rgba(59,130,246,.15), transparent),
+                  radial-gradient(900px 600px at -10% 20%, rgba(34,197,94,.12), transparent),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Layout */
+    .container { max-width: 1120px; margin: 0 auto; padding: 24px; }
+
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(11,18,32,.7); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; padding: 14px 24px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; }
+    .brand .logo {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), #60a5fa);
+      display: grid; place-items: center; color: white; font-weight: 800;
+      box-shadow: var(--shadow);
+    }
+    .nav a { color: var(--text); opacity: .85; }
+    .nav a:hover { opacity: 1; }
+
+    /* Hero */
+    .hero {
+      display: grid; grid-template-columns: 1.2fr 1fr; gap: 28px;
+      align-items: center; padding: 48px 24px 12px;
+    }
+    .hero-card {
+      background: linear-gradient(180deg, rgba(17,26,46,.95), rgba(17,26,46,.75));
+      border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 28px; box-shadow: var(--shadow);
+    }
+    .hero h1 { font-size: 40px; margin: 0 0 8px; letter-spacing: -.02em; }
+    .hero p { color: var(--muted); margin: 0 0 16px; }
+    .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .tag { padding: 6px 10px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted); font-size: 12px; }
+
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 16px; }
+    .stat { background: #0e1730; border: 1px solid var(--border); border-radius: 12px; padding: 14px; text-align: center; }
+    .stat h3 { margin: 0; font-size: 22px; }
+    .stat p { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
+
+    .hero-visual {
+      background: radial-gradient(200px 140px at 20% 30%, rgba(59,130,246,.18), transparent), #0d152b;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 18px; box-shadow: var(--shadow); position: relative;
+      overflow: hidden; min-height: 260px;
+    }
+    .pulse {
+      position: absolute; inset: 0; background:
+        radial-gradient(120px 80px at 70% 30%, rgba(34,197,94,.18), transparent),
+        radial-gradient(90px 60px at 20% 70%, rgba(59,130,246,.22), transparent);
+      animation: float 6s ease-in-out infinite alternate;
+      filter: blur(12px);
+    }
+    @keyframes float { from { transform: translateY(-6px); } to { transform: translateY(6px); } }
+
+    /* Sections */
+    section { margin: 36px 0; }
+    .section-title { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .section-title h2 { margin: 0; font-size: 22px; }
+    .section-title p { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
+
+    .grid { display: grid; gap: 16px; }
+    .grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; box-shadow: var(--shadow); }
+    .card h3 { margin: 0 0 8px; font-size: 18px; }
+    .card p { margin: 0; color: var(--muted); font-size: 14px; }
+
+    .service-icon { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: #0e1730; border: 1px solid var(--border); color: #8ab4ff; margin-bottom: 8px; }
+
+    /* Doctors */
+    .doctor { display: grid; grid-template-columns: 56px 1fr auto; gap: 12px; align-items: center; }
+    .avatar { width: 56px; height: 56px; border-radius: 12px; background: linear-gradient(135deg, #60a5fa, #22c55e); border: 2px solid #0e1730; }
+    .chip { border: 1px solid var(--border); color: var(--muted); padding: 6px 10px; border-radius: 999px; font-size: 12px; }
+
+    /* Booking */
+    form { display: grid; gap: 12px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+    input, select, textarea {
+      width: 100%; padding: 12px 12px; border-radius: 10px; border: 1px solid var(--border);
+      background: #0b132a; color: var(--text); outline: none;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--ring); }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 10px 14px; border-radius: 10px; border: 1px solid transparent;
+      background: linear-gradient(180deg, var(--primary), var(--primary-600));
+      color: white; font-weight: 600; cursor: pointer; box-shadow: var(--shadow);
+    }
+    .btn.secondary { background: transparent; border-color: var(--border); color: var(--text); }
+
+    /* Footer */
+    footer { margin-top: 40px; padding: 24px; border-top: 1px solid var(--border); color: var(--muted); text-align: center; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .grid.cols-3 { grid-template-columns: 1fr; }
+      .grid.cols-2 { grid-template-columns: 1fr; }
+      .row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav container">
+      <div class="brand">
+        <div class="logo">HC</div>
+        <span>HealthCare Clinic</span>
+      </div>
+      <nav style="display:flex; gap:14px;">
+        <a href="/">Home</a>
+        <a href="./clinic.html" aria-current="page" style="color:#8ab4ff;">Clinic</a>
+        <a href="#services">Services</a>
+        <a href="#doctors">Doctors</a>
+        <a href="#booking">Book</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div class="hero-card">
+        <h1>Modern care, compassionate people</h1>
+        <p>Multispecialty outpatient clinic providing primary care, cardiology, pediatrics and telehealth. Open 7 days.</p>
+        <div class="tags">
+          <span class="tag">Walk-ins Welcome</span>
+          <span class="tag">Emergency Care</span>
+          <span class="tag">Lab & Imaging</span>
+          <span class="tag">Teleconsults</span>
+        </div>
+        <div class="stats">
+          <div class="stat"><h3>24/7</h3><p>Hotline</p></div>
+          <div class="stat"><h3>25+</h3><p>Doctors</p></div>
+          <div class="stat"><h3>4.8★</h3><p>Patient rating</p></div>
+        </div>
+        <div style="margin-top:16px; display:flex; gap:10px;">
+          <a class="btn" href="#booking">Book Appointment</a>
+          <a class="btn secondary" href="#services">Explore Services</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="pulse" aria-hidden="true"></div>
+        <div style="position:absolute; bottom:16px; left:16px; right:16px; display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+          <div class="card">
+            <h3 style="margin:0 0 4px;">Today’s Hours</h3>
+            <p style="margin:0;">Mon–Sun: 8:00 AM – 8:00 PM</p>
+          </div>
+          <div class="card">
+            <h3 style="margin:0 0 4px;">Hotline</h3>
+            <p style="margin:0;">+91 98 7654 3210</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services">
+      <div class="section-title">
+        <div>
+          <h2>Our Services</h2>
+          <p>Comprehensive care for individuals and families</p>
+        </div>
+        <a class="btn secondary" href="#booking">Need something specific?</a>
+      </div>
+      <div class="grid cols-3">
+        <div class="card">
+          <div class="service-icon">🩺</div>
+          <h3>Primary Care</h3>
+          <p>Routine checkups, chronic disease management, prescriptions and referrals.</p>
+        </div>
+        <div class="card">
+          <div class="service-icon">❤️</div>
+          <h3>Cardiology</h3>
+          <p>ECG, stress tests and heart health management with board-certified cardiologists.</p>
+        </div>
+        <div class="card">
+          <div class="service-icon">👶</div>
+          <h3>Pediatrics</h3>
+          <p>Well-baby visits, vaccinations and adolescent care with family support.</p>
+        </div>
+        <div class="card">
+          <div class="service-icon">🧪</div>
+          <h3>Lab Services</h3>
+          <p>On-site blood tests, diagnostics and quick results integrated with your records.</p>
+        </div>
+        <div class="card">
+          <div class="service-icon">🖥️</div>
+          <h3>Telehealth</h3>
+          <p>Virtual appointments for follow-ups and minor issues via secure video.</p>
+        </div>
+        <div class="card">
+          <div class="service-icon">🩹</div>
+          <h3>Urgent Care</h3>
+          <p>Walk-in treatment for minor injuries, infections, sprains and more.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DOCTORS -->
+    <section id="doctors">
+      <div class="section-title">
+        <div>
+          <h2>Doctors</h2>
+          <p>Experienced specialists across key disciplines</p>
+        </div>
+        <div class="chip">Accepting new patients</div>
+      </div>
+      <div class="grid cols-2">
+        <div class="card doctor">
+          <div class="avatar" aria-hidden="true"></div>
+          <div>
+            <h3>Dr. A. Sharma</h3>
+            <p>Cardiologist • 12 yrs • Mon–Sat</p>
+          </div>
+          <a href="#booking" class="btn">Book</a>
+        </div>
+        <div class="card doctor">
+          <div class="avatar" aria-hidden="true"></div>
+          <div>
+            <h3>Dr. R. Patel</h3>
+            <p>Pediatrician • 10 yrs • Tue–Sun</p>
+          </div>
+          <a href="#booking" class="btn">Book</a>
+        </div>
+        <div class="card doctor">
+          <div class="avatar" aria-hidden="true"></div>
+          <div>
+            <h3>Dr. K. Verma</h3>
+            <p>General Physician • 15 yrs • Daily</p>
+          </div>
+          <a href="#booking" class="btn">Book</a>
+        </div>
+        <div class="card doctor">
+          <div class="avatar" aria-hidden="true"></div>
+          <div>
+            <h3>Dr. S. Nayar</h3>
+            <p>Dermatologist • 8 yrs • Wed–Sun</p>
+          </div>
+          <a href="#booking" class="btn">Book</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOOKING -->
+    <section id="booking">
+      <div class="section-title">
+        <div>
+          <h2>Book an appointment</h2>
+          <p>Submit the form and we’ll confirm via SMS/Email</p>
+        </div>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <span class="chip" id="booking-status">Safe & Secure</span>
+        </div>
+      </div>
+      <div class="card">
+        <form id="booking-form" novalidate>
+          <div class="row">
+            <div>
+              <label for="name">Full name</label>
+              <input id="name" name="name" type="text" placeholder="John Doe" required />
+            </div>
+            <div>
+              <label for="phone">Phone</label>
+              <input id="phone" name="phone" type="tel" inputmode="tel" placeholder="+91 99999 99999" required />
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label for="department">Department</label>
+              <select id="department" name="department" required>
+                <option value="">Select</option>
+                <option>Primary Care</option>
+                <option>Cardiology</option>
+                <option>Pediatrics</option>
+                <option>Dermatology</option>
+                <option>Telehealth</option>
+              </select>
+            </div>
+            <div>
+              <label for="date">Preferred date</label>
+              <input id="date" name="date" type="date" required />
+            </div>
+          </div>
+          <div>
+            <label for="notes">Notes (optional)</label>
+            <textarea id="notes" name="notes" rows="3" placeholder="Describe symptoms or requests..."></textarea>
+          </div>
+          <div style="display:flex; gap:10px; align-items:center; justify-content:flex-end;">
+            <button class="btn secondary" type="reset">Reset</button>
+            <button class="btn" type="submit">Submit</button>
+          </div>
+        </form>
+        <div id="confirmation" class="card" style="margin-top:12px; display:none; background:#0e1730;">
+          <h3 style="margin:0 0 8px;">Appointment requested</h3>
+          <p id="confirmation-text" style="margin:0;" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT/LOCATION -->
+    <section id="contact">
+      <div class="section-title">
+        <div>
+          <h2>Visit or contact us</h2>
+          <p>Address, hours and directions</p>
+        </div>
+        <a class="btn secondary" href="#top">Back to top</a>
+      </div>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>Clinic</h3>
+          <p>HealthCare Clinic, 21 MG Road, Bengaluru 560001</p>
+          <p>Open: 8:00 AM – 8:00 PM (Mon–Sun)</p>
+          <p>Phone: +91 98 7654 3210</p>
+          <p>Email: care@healthclinic.example</p>
+        </div>
+        <div class="card">
+          <h3>Map</h3>
+          <p style="color:var(--muted);">Map preview is illustrative.</p>
+          <div style="height:220px; border-radius:10px; border:1px solid var(--border); background: linear-gradient(180deg, #0d1530, #0a1226); display:grid; place-items:center; color:#8ab4ff;">🗺️ Map</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> HealthCare Clinic. All rights reserved.
+  </footer>
+
+  <script>
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Simple booking form handling
+    const form = document.getElementById('booking-form');
+    const conf = document.getElementById('confirmation');
+    const confText = document.getElementById('confirmation-text');
+    const statusChip = document.getElementById('booking-status');
+
+    function validatePhone(v) {
+      return /[0-9]{8,}/.test((v||'').replace(/\D/g, ''));
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+
+      // Basic validation
+      if (!data.name || !validatePhone(data.phone) || !data.department || !data.date) {
+        statusChip.textContent = 'Please fill required fields';
+        statusChip.style.color = '#fff';
+        statusChip.style.borderColor = 'var(--danger)';
+        statusChip.style.background = 'linear-gradient(180deg, #ef4444, #dc2626)';
+        return;
+      }
+
+      statusChip.textContent = 'Submitting...';
+      statusChip.style.background = 'transparent';
+      statusChip.style.borderColor = 'var(--border)';
+      statusChip.style.color = 'var(--muted)';
+
+      // Fake async submit
+      setTimeout(() => {
+        const when = new Date(data.date);
+        const pretty = when.toLocaleDateString(undefined, { year:'numeric', month:'short', day:'numeric' });
+        confText.textContent = `Thank you ${data.name}. We will call ${data.phone} to confirm your ${data.department} appointment for ${pretty}.`;
+        conf.style.display = 'block';
+        statusChip.textContent = 'Request sent';
+        statusChip.style.color = '#22c55e';
+        form.reset();
+      }, 700);
+    });
+  </script>
+</body>
+</html>
