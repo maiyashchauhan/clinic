@@ -43,26 +43,5 @@ To host this page on GitHub Pages from this repository:
 
 3. In your GitHub repository settings, enable GitHub Pages and set the source to the `main` branch and the `/ (root)` folder. Save.
 
-4. Your site will be available at `https://<your-username>.github.io/<your-repo>/clinic.html` shortly.
-
-Tip: Rename `clinic.html` to `index.html` if you want the page to be served from the root URL (e.g., `https://<your-username>.github.io/<your-repo>/`).
-
-## Customization
-
-- Replace text, contact details, or icons directly in `clinic.html`.
-- Colors and typographic scale are defined in the file's CSS root variables — edit `:root` to change theme colors.
-
-## Accessibility & notes
-
-- Form includes basic validation and polite confirmation messaging.
-- The page uses semantic HTML and aims to be keyboard navigable.
-- Map block is illustrative — replace with an embedded map (Google Maps / OpenStreetMap iframe) if needed.
-
-## License
-
-This project is provided under the MIT License. See `LICENSE` (not included) or add a LICENSE file if you plan to open-source the repo.
-
-## Contact
-
-If you need help customizing or deploying this page, open an issue or contact the author.
+4. Your site will be available at `https://<maiyashchauhan>.github.io/<your-repo>/clinic.html` shortly.
 # clinic
